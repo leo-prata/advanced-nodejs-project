@@ -1,20 +1,18 @@
-const puppeteer = require('puppeteer');
 const sessionFactory = require('./factories/session-factory');
 const userFactory = require('./factories/user-factory');
+const Page = require('./helpers/page');
 
-let browser, page;
+jest.setTimeout(10000);
+
+let page;
 
 beforeEach(async () => {
-	browser = await puppeteer.launch({
-		headless: false,
-	});
-
-	page = await browser.newPage();
+	page = await Page.build();
 	await page.goto('http://localhost:3000');
 });
 
 afterEach(async () => {
-	await browser.close();
+	await page.close();
 });
 
 test('The header have the correct text', async () => {
@@ -23,6 +21,7 @@ test('The header have the correct text', async () => {
 });
 
 test('Clicking login starts OAuth flow', async () => {
+	await page.waitFor('.right a');
 	await page.click('.right a');
 
 	const url = await page.url();
