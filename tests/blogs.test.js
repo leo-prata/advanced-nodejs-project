@@ -1,3 +1,4 @@
+const e = require('express');
 const Page = require('./helpers/page');
 
 let page;
@@ -21,5 +22,18 @@ describe('When logged in', async () => {
 		const label = await page.getContentOf('form label');
 
 		expect(label).toEqual('Blog Title');
+	});
+
+	describe('And using invalid inputs', async () => {
+		beforeEach(async () => {
+			await page.click('form button');
+		});
+		test('the form submits and takes us to review screen', async () => {
+			const titleError = await page.getContentOf('.title .red-text');
+			const contentError = await page.getContentOf('.content .red-text');
+
+			expect(titleError).toEqual('You must provide a value');
+			expect(contentError).toEqual('You must provide a value');
+		});
 	});
 });
