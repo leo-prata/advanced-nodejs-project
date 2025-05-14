@@ -1,5 +1,3 @@
-const sessionFactory = require('./factories/session-factory');
-const userFactory = require('./factories/user-factory');
 const Page = require('./helpers/page');
 
 jest.setTimeout(10000);
@@ -29,14 +27,7 @@ test('Clicking login starts OAuth flow', async () => {
 });
 
 test('When signed in, shows logout button', async () => {
-	const user = await userFactory();
-	const { session, signature } = sessionFactory(user);
-
-	await page.setCookie({ name: 'session', value: session });
-	await page.setCookie({ name: 'session.sig', value: signature });
-	await page.goto('http://localhost:3000');
-
-	await page.waitFor('a[href="/auth/logout"]');
+	await page.login();
 
 	const text = await page.$eval('a[href="/auth/logout"]', (el) => el.innerHTML);
 	expect(text).toEqual('Logout');
