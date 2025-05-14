@@ -13,7 +13,7 @@ afterEach(async () => {
 
 test('When logged in, can see blog create form', async () => {
 	await page.login();
-	await page.cliclk('a.btn-floating');
+	await page.click('a.btn-floating');
 
 	const label = await page.getContentOf('form label');
 

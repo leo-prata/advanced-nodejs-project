@@ -1,7 +1,5 @@
 const Page = require('./helpers/page');
 
-jest.setTimeout(10000);
-
 let page;
 
 beforeEach(async () => {
