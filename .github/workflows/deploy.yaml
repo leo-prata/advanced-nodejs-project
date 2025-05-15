@@ -3,8 +3,6 @@ name: deploy
 on:
  push:
   branches: [master]
- pull_request:
-  branches: [master]
 
 jobs:
  build:
@@ -26,7 +24,7 @@ jobs:
 
   env:
    NODE_ENV: ci
-   PORT: 3111
+   PORT: 3000
 
   steps:
    - uses: actions/checkout@v2
